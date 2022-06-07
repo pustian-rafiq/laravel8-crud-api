@@ -21,8 +21,12 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('register',[AuthController::class,'Register']);
+Route::post('login',[AuthController::class,'Login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::post('logout',[AuthController::class,'Logout']);
+
     //product crud route
     Route::get('product/view', [ProductController::class, 'getProducts']);
     Route::get('product/{id}/show', [ProductController::class, 'getProduct']);

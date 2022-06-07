@@ -32,4 +32,34 @@ class AuthController extends Controller
 
         return response($response,201);
     }
+
+    //Login
+    public function Login(Request $request){
+        $validateData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
+
+        $user = User::where('email', $validateData['email'])->first();
+
+        if(!$user || !Hash::check($validateData['password'], $user->password)){
+            return response(['message' => 'Invalid Credentials!']);
+        }else{
+            $token = $user->createToken("crudrestapi")->plainTextToken;
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+    
+            return response($response,201);
+        }
+    }
+
+    //Logout
+    public function Logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return response(['message' => 'You are successfully logged out']);
+    }
 }
