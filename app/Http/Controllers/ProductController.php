@@ -15,6 +15,23 @@ class ProductController extends Controller
             "products" => $products
         ],200);
     }
+
+    //fetch single product
+    public function getProduct($id){
+        $product = Product::find($id);
+
+        if($product){
+            return response()->json([
+                "product" => $product
+            ],200);
+        }else{
+            return response()->json([
+                "message" => "No product found"
+            ],404);
+        }
+       
+    }
+
     //store product
     public function store(Request $request){
 
