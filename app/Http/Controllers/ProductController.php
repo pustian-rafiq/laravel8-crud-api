@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    //fetch all products
+    public function getProducts(){
+        $products = Product::latest()->get();
+
+        return response()->json([
+            "products" => $products
+        ],200);
+    }
     //store product
     public function store(Request $request){
 
@@ -28,6 +36,6 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => "Product inserted successfully"
-        ],200);
+        ],201);
     }
 }
