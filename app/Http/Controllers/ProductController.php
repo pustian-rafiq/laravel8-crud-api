@@ -56,7 +56,7 @@ class ProductController extends Controller
         ],201);
     }
 
-    //store update
+    //product update
     public function update(Request $request,$id){
 
         $validateData = $request->validate([
@@ -78,6 +78,26 @@ class ProductController extends Controller
     
             return response()->json([
                 'message' => "Product updated successfully"
+            ],200);
+        }else{
+            return response()->json([
+                'message' => "Product not fund"
+            ],404);
+        }
+       
+    }
+
+    //product delete
+    public function delete($id){
+
+        
+        $data = Product::find($id);
+
+        if($data){   
+            $data->delete();
+    
+            return response()->json([
+                'message' => "Product deleted successfully"
             ],200);
         }else{
             return response()->json([
